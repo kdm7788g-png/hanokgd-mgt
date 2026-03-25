@@ -5,87 +5,104 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>금당채 한옥마을 스마트 관리 시스템</title>
     <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <style>
-        /* [핵심 색상 변수 정의 - 로고 기반] */
+   <style>
+        /* [핵심 색상 변수] */
         :root {
-            --gd-primary-green: #3A7F4B;  /* 소나무/녹색 (강조 포인트) */
-            --gd-charcoal: #333333;        /* 기와색 (메인 글자색) */
-            --gd-bg-cream: #F9F7F2;        /* 한지색 (은은한 배경) */
-            --gd-grey-light: #4A4A4A;     /* 보조 글자색 */
-            --shadow: 0 4px 15px rgba(0,0,0,0.08); /* 은은한 그림자 */
+            --gd-primary-green: #3A7F4B;
+            --gd-charcoal: #333333;
+            --gd-bg-cream: #F9F7F2;
+            --shadow: 0 4px 15px rgba(0,0,0,0.08);
             --border-radius: 12px;
         }
 
-        /* [전체 스타일 적용] */
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         body {
             font-family: 'Noto Sans KR', sans-serif;
             background-color: var(--gd-bg-cream);
             color: var(--gd-charcoal);
             line-height: 1.6;
+            /* 모바일 우선: 상단 여백을 넉넉히 줍니다 */
+            padding-top: 180px; 
         }
 
-        /* [상단 헤더 - 로고 배치] */
+        /* [상단 헤더 - 모바일/PC 대응] */
         .header {
             background-color: white;
-            padding: 10px 30px;
+            padding: 15px;
             display: flex;
-            justify-content: space-between;
+            flex-direction: column; /* 모바일: 위아래 배치 */
             align-items: center;
+            gap: 10px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.03);
             position: fixed; width: 100%; top: 0; z-index: 1000;
         }
 
         .logo-link { text-decoration: none; display: flex; align-items: center; }
         
-        /* [중요: 서재용님의 로고 이미지 파일명을 여기에 적어주세요] */
         .logo-image {
-            height: 120px; /* 로고 높이 */
+            height: 70px; /* 모바일: 로고를 적당한 크기로 */
             width: auto;
-            margin-right: 15px;
+            margin-right: 10px;
         }
 
         .system-name {
-            font-size: 1.1rem;
-            font-weight: 500;
+            font-size: 1rem;
+            font-weight: 700;
             color: var(--gd-primary-green);
         }
 
-        /* [실시간 위젯 - 날씨 & 시계] */
-        .info-widget { display: flex; align-items: center; gap: 15px; font-size: 0.9rem; color: #666; }
-        .weather-box { background: #f0f4f8; padding: 5px 12px; border-radius: 20px; color: var(--gd-primary-green); font-weight: 500; }
-        #digital-clock { font-family: 'Courier New', Courier, monospace; font-weight: bold; color: var(--gd-charcoal); }
+        .info-widget { display: flex; align-items: center; gap: 10px; font-size: 0.8rem; }
+        .weather-box { background: #f0f4f8; padding: 4px 10px; border-radius: 20px; color: var(--gd-primary-green); font-weight: bold; }
 
-        /* [메인 컨텐츠 영역] */
-        .main-content { margin-top: 100px; padding: 30px; max-width: 1200px; margin: 0 auto; }
-        .welcome-section { margin-bottom: 30px; text-align: center; }
-        .welcome-title { font-family: 'Gowun Batang', serif; font-size: 2.2rem; color: var(--gd-charcoal); margin-bottom: 5px; }
+        /* [메인 컨텐츠] */
+        .main-content { padding: 20px; max-width: 1200px; margin: 0 auto; }
+        .welcome-section { margin-bottom: 25px; text-align: center; }
+        .welcome-title { font-family: 'Gowun Batang', serif; font-size: 1.6rem; margin-bottom: 5px; }
 
-        /* [사진 스타일 효과 - 대표님이 요청하신 부분!] */
+        /* [대시보드 그리드 - 자동 조절] */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr; /* 모바일: 무조건 한 줄 */
+            gap: 20px;
+        }
+
+        .card { background: white; border-radius: var(--border-radius); box-shadow: var(--shadow); padding: 20px; }
+        .card-title { font-family: 'Gowun Batang', serif; font-size: 1.2rem; color: var(--gd-primary-green); margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 8px; }
+        
         .hanok-photo {
             width: 100%; height: 180px; object-fit: cover;
             border-radius: var(--border-radius);
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease; /* 부드러운 움직임 */
+            transition: transform 0.3s ease;
             margin-bottom: 15px;
-            cursor: pointer;
-        }
-        .hanok-photo:hover {
-            transform: scale(1.03); /* 마우스 올리면 살짝 커짐 */
         }
 
-        /* [대시보드 그리드 - 3열 배치] */
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 20px;
-        }
-
-        .card { background-color: white; border-radius: var(--border-radius); box-shadow: var(--shadow); padding: 20px; }
-        .card-title { font-family: 'Gowun Batang', serif; font-size: 1.3rem; color: var(--gd-primary-green); margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 8px; }
-        
-        .status-item { display: flex; justify-content: space-between; margin-bottom: 10px; padding: 10px; border-radius: 8px; background: #fafafa; }
+        .status-item { display: flex; justify-content: space-between; padding: 10px; background: #fafafa; border-radius: 8px; margin-bottom: 8px; font-size: 0.9rem; }
         .alert { color: #d9534f; font-weight: bold; }
+
+        /* [🌟 PC 환경(넓은 화면)을 위한 특별 규칙] */
+        @media (min-width: 768px) {
+            body { padding-top: 130px; } /* 상단 여백 조절 */
+            
+            .header { 
+                flex-direction: row; /* PC: 좌우 배치 */
+                justify-content: space-between; 
+                padding: 10px 40px; 
+            }
+            
+            .logo-image { 
+                height: 120px; /* 대표님이 원하시는 큰 로고 크기 적용 */
+            }
+            
+            .system-name { font-size: 1.2rem; }
+            
+            .dashboard-grid {
+                grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); /* PC: 여러 줄 배치 */
+            }
+            
+            .welcome-title { font-size: 2.2rem; }
+        }
     </style>
 </head>
 <body>
