@@ -6,34 +6,62 @@
     <title>금당채 한옥마을 스마트 관리 시스템</title>
     <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
+        /* [핵심 색상 변수 정의 - 로고 기반] */
         :root {
-            --gd-primary-brown: #7F5539; 
-            --gd-charcoal: #333333;       
-            --gd-bg-cream: #F9F7F2;       
-            --shadow: 0 4px 15px rgba(0,0,0,0.08);
+            --gd-primary-green: #3A7F4B;  /* 소나무/녹색 (강조 포인트) */
+            --gd-charcoal: #333333;        /* 기와색 (메인 글자색) */
+            --gd-bg-cream: #F9F7F2;        /* 한지색 (은은한 배경) */
+            --gd-grey-light: #4A4A4A;     /* 보조 글자색 */
+            --shadow: 0 4px 15px rgba(0,0,0,0.08); /* 은은한 그림자 */
             --border-radius: 12px;
         }
 
+        /* [전체 스타일 적용] */
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Noto Sans KR', sans-serif; background-color: var(--gd-bg-cream); color: var(--gd-charcoal); padding-top: 80px; }
-
-        /* [헤더 섹션] */
-        .header {
-            background-color: white; padding: 10px 30px; display: flex; justify-content: space-between; align-items: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.03); position: fixed; width: 100%; top: 0; z-index: 1000;
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: var(--gd-bg-cream);
+            color: var(--gd-charcoal);
+            line-height: 1.6;
         }
-        .logo-area { display: flex; align-items: center; text-decoration: none; }
-        .logo-image { height: 45px; margin-right: 12px; }
-        .system-name { font-size: 1.1rem; font-weight: 500; color: var(--gd-primary-brown); }
 
-        .info-widget { display: flex; align-items: center; gap: 15px; font-size: 0.9rem; }
-        .weather-box { background: #f0f4f8; padding: 5px 12px; border-radius: 20px; color: var(--gd-primary-brown); font-weight: bold; }
-        #digital-clock { font-family: 'Courier New', Courier, monospace; font-weight: bold; }
+        /* [상단 헤더 - 로고 배치] */
+        .header {
+            background-color: white;
+            padding: 10px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+            position: fixed; width: 100%; top: 0; z-index: 1000;
+        }
 
-        /* [메인 컨텐츠] */
-        .main-content { padding: 30px; max-width: 1200px; margin: 0 auto; }
+        .logo-link { text-decoration: none; display: flex; align-items: center; }
         
-        /* [중요: 사진 스타일 효과 - 대표님이 요청하신 부분!] */
+        /* [중요: 서재용님의 로고 이미지 파일명을 여기에 적어주세요] */
+        .logo-image {
+            height: 50px; /* 로고 높이 */
+            width: auto;
+            margin-right: 15px;
+        }
+
+        .system-name {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--gd-primary-green);
+        }
+
+        /* [실시간 위젯 - 날씨 & 시계] */
+        .info-widget { display: flex; align-items: center; gap: 15px; font-size: 0.9rem; color: #666; }
+        .weather-box { background: #f0f4f8; padding: 5px 12px; border-radius: 20px; color: var(--gd-primary-green); font-weight: 500; }
+        #digital-clock { font-family: 'Courier New', Courier, monospace; font-weight: bold; color: var(--gd-charcoal); }
+
+        /* [메인 컨텐츠 영역] */
+        .main-content { margin-top: 100px; padding: 30px; max-width: 1200px; margin: 0 auto; }
+        .welcome-section { margin-bottom: 30px; text-align: center; }
+        .welcome-title { font-family: 'Gowun Batang', serif; font-size: 2.2rem; color: var(--gd-charcoal); margin-bottom: 5px; }
+
+        /* [사진 스타일 효과 - 대표님이 요청하신 부분!] */
         .hanok-photo {
             width: 100%; height: 180px; object-fit: cover;
             border-radius: var(--border-radius);
@@ -46,45 +74,56 @@
             transform: scale(1.03); /* 마우스 올리면 살짝 커짐 */
         }
 
-        .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 25px; }
-        .card { background: white; border-radius: var(--border-radius); box-shadow: var(--shadow); padding: 20px; }
-        .card-title { font-family: 'Gowun Batang', serif; font-size: 1.4rem; color: var(--gd-primary-brown); margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+        /* [대시보드 그리드 - 3열 배치] */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+        }
 
-        .status-item { display: flex; justify-content: space-between; margin-bottom: 10px; padding: 10px; background: #fafafa; border-radius: 8px; }
+        .card { background-color: white; border-radius: var(--border-radius); box-shadow: var(--shadow); padding: 20px; }
+        .card-title { font-family: 'Gowun Batang', serif; font-size: 1.3rem; color: var(--gd-primary-green); margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 8px; }
+        
+        .status-item { display: flex; justify-content: space-between; margin-bottom: 10px; padding: 10px; border-radius: 8px; background: #fafafa; }
         .alert { color: #d9534f; font-weight: bold; }
     </style>
 </head>
 <body>
 
     <header class="header">
-        <a href="#" class="logo-area">
-            <img src="https://i.ibb.co/6P0fM-hT/Geumdangchae-Hanok-Village-Management-System-Logo.png" alt="금당채 로고" class="logo-image">
+        <a href="/" class="logo-link">
+            <img src="https://i.ibb.co/CJS6g1C2/Geumdangchae-Hanok-Village-Management-System-Logo-Premium.png" alt="금당채 로고" class="logo-image">
             <span class="system-name">금당채 관리 시스템</span>
         </a>
         <div class="info-widget">
             <div id="weather" class="weather-box">날씨 로딩중...</div>
-            <div id="digital-clock">00:00:00</div>
+            <div id="digital-clock">0000-00-00 00:00:00</div>
         </div>
     </header>
 
     <main class="main-content">
+        <div class="welcome-section">
+            <h1 class="welcome-title">어서오세요, 서재용 대표님!</h1>
+            <p>전통의 기와 아래, 스마트한 관리가 흐릅니다.</p>
+        </div>
+
         <div class="dashboard-grid">
             
             <div class="card">
                 <h2 class="card-title">객실 현황</h2>
-                <img src="https://images.unsplash.com/photo-1590212151175-e58edd96185b?auto=format&fit=crop&w=800&q=80" alt="한옥 전경" class="hanok-photo">
+                <img src="https://images.unsplash.com/photo-1590212151175-e58edd96185b?auto=format&fit=crop&w=800&q=80" alt="금당채 전경" class="hanok-photo">
                 <div class="status-item"><span>선비채 (A동)</span><span class="alert">점검중</span></div>
                 <div class="status-item"><span>금당채 (B동)</span><span>이용중</span></div>
                 <div class="status-item"><span>조경채 (C동)</span><span style="color:green">예약가능</span></div>
             </div>
 
             <div class="card">
-                <h2 class="card-title">오늘의 일정</h2>
-                <div style="padding: 10px; line-height: 2;">
-                    <p>• 10:00 - 퇴실 객실 청소 상태 확인</p>
-                    <p style="color: var(--gd-primary-brown); font-weight: bold;">• 14:00 - 꽃게 김치 신규 판로 회의</p>
-                    <p>• 16:00 - 정원 화단 물주기 및 전지</p>
-                </div>
+                <h2 class="card-title">오늘의 주요 일정</h2>
+                <p style="font-size: 0.9rem; line-height: 1.8;">
+                    • 10:00 - 퇴실 객실 청소 상태 확인<br>
+                    • 14:00 - 꽃게 김치 신규 판로 회의<br>
+                    • 16:00 - 정원 화단 물주기 및 전지
+                </p>
             </div>
 
             <div class="card">
@@ -106,7 +145,7 @@
         setInterval(updateClock, 1000);
         updateClock();
 
-        // 날씨 기능 (천안 성거읍)
+        // 날씨 기능 (천안 성거읍 위경도)
         async function fetchWeather() {
             try {
                 const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=36.88&longitude=127.21&current_weather=true');
