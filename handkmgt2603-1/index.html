@@ -15,41 +15,42 @@
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Noto Sans KR', sans-serif;
-            background-color: var(--gd-bg-cream);
-            color: var(--gd-charcoal);
-        }
+        body { font-family: 'Noto Sans KR', sans-serif; background-color: var(--gd-bg-cream); color: var(--gd-charcoal); padding-top: 80px; }
 
-        /* 헤더 스타일 */
+        /* [헤더 섹션] */
         .header {
-            background-color: white;
-            padding: 10px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.03);
-            position: fixed; width: 100%; top: 0; z-index: 1000;
+            background-color: white; padding: 10px 30px; display: flex; justify-content: space-between; align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.03); position: fixed; width: 100%; top: 0; z-index: 1000;
         }
-
         .logo-area { display: flex; align-items: center; text-decoration: none; }
         .logo-image { height: 45px; margin-right: 12px; }
         .system-name { font-size: 1.1rem; font-weight: 500; color: var(--gd-primary-brown); }
 
-        /* 시계 및 날씨 위젯 */
-        .info-widget { display: flex; align-items: center; gap: 20px; font-size: 0.9rem; color: #666; }
-        .weather-box { background: #f0f4f8; padding: 5px 12px; border-radius: 20px; color: var(--gd-primary-brown); font-weight: 500; }
-        #digital-clock { font-family: monospace; font-weight: bold; color: var(--gd-charcoal); }
+        .info-widget { display: flex; align-items: center; gap: 15px; font-size: 0.9rem; }
+        .weather-box { background: #f0f4f8; padding: 5px 12px; border-radius: 20px; color: var(--gd-primary-brown); font-weight: bold; }
+        #digital-clock { font-family: 'Courier New', Courier, monospace; font-weight: bold; }
 
-        .main-content { margin-top: 90px; padding: 30px; max-width: 1100px; margin-left: auto; margin-right: auto; }
-        .welcome-card { background: white; padding: 30px; border-radius: var(--border-radius); box-shadow: var(--shadow); margin-bottom: 30px; text-align: center; }
-        .welcome-title { font-family: 'Gowun Batang', serif; font-size: 2.2rem; color: var(--gd-charcoal); margin-bottom: 5px; }
-
-        .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
-        .card { background: white; border-radius: var(--border-radius); box-shadow: var(--shadow); padding: 20px; }
-        .card-title { font-family: 'Gowun Batang', serif; font-size: 1.3rem; color: var(--gd-primary-brown); margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 8px; }
+        /* [메인 컨텐츠] */
+        .main-content { padding: 30px; max-width: 1200px; margin: 0 auto; }
         
-        .status-item { display: flex; justify-content: space-between; margin-bottom: 10px; padding: 8px; background: #fafafa; border-radius: 6px; }
+        /* [중요: 사진 스타일 효과 - 대표님이 요청하신 부분!] */
+        .hanok-photo {
+            width: 100%; height: 180px; object-fit: cover;
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease; /* 부드러운 움직임 */
+            margin-bottom: 15px;
+            cursor: pointer;
+        }
+        .hanok-photo:hover {
+            transform: scale(1.03); /* 마우스 올리면 살짝 커짐 */
+        }
+
+        .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 25px; }
+        .card { background: white; border-radius: var(--border-radius); box-shadow: var(--shadow); padding: 20px; }
+        .card-title { font-family: 'Gowun Batang', serif; font-size: 1.4rem; color: var(--gd-primary-brown); margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+
+        .status-item { display: flex; justify-content: space-between; margin-bottom: 10px; padding: 10px; background: #fafafa; border-radius: 8px; }
         .alert { color: #d9534f; font-weight: bold; }
     </style>
 </head>
@@ -61,79 +62,59 @@
             <span class="system-name">금당채 관리 시스템</span>
         </a>
         <div class="info-widget">
-            <div id="weather" class="weather-box">날씨 정보 로딩 중...</div>
-            <div id="digital-clock">0000-00-00 00:00:00</div>
+            <div id="weather" class="weather-box">날씨 로딩중...</div>
+            <div id="digital-clock">00:00:00</div>
         </div>
     </header>
 
     <main class="main-content">
-        <div class="welcome-card">
-            <h1 class="welcome-title">어서오세요, 서재용 대표님</h1>
-            <p>전통의 기와 아래, 스마트한 관리가 흐릅니다.</p>
-        </div>
-
         <div class="dashboard-grid">
+            
             <div class="card">
-                <h2 class="card-title">실시간 객실 현황</h2>
-                <div class="status-item"><span>선비채 (A)</span><span class="alert">점검중</span></div>
-                <div class="status-item"><span>금당채 (B)</span><span>이용중</span></div>
-                <div class="status-item"><span>조경채 (C)</span><span style="color:green">예약가능</span></div>
+                <h2 class="card-title">객실 현황</h2>
+                <img src="https://images.unsplash.com/photo-1590212151175-e58edd96185b?auto=format&fit=crop&w=800&q=80" alt="한옥 전경" class="hanok-photo">
+                <div class="status-item"><span>선비채 (A동)</span><span class="alert">점검중</span></div>
+                <div class="status-item"><span>금당채 (B동)</span><span>이용중</span></div>
+                <div class="status-item"><span>조경채 (C동)</span><span style="color:green">예약가능</span></div>
             </div>
 
             <div class="card">
-                <h2 class="card-title">오늘의 주요 일정</h2>
-                <p style="font-size: 0.9rem; line-height: 1.8;">
-                    • 10:00 - 퇴실 점검 및 청소 교대<br>
-                    • 14:00 - 꽃게 김치 사업 전략 미팅<br>
-                    • 16:00 - 한옥 정원 수분 보충(물주기)
-                </p>
+                <h2 class="card-title">오늘의 일정</h2>
+                <div style="padding: 10px; line-height: 2;">
+                    <p>• 10:00 - 퇴실 객실 청소 상태 확인</p>
+                    <p style="color: var(--gd-primary-brown); font-weight: bold;">• 14:00 - 꽃게 김치 신규 판로 회의</p>
+                    <p>• 16:00 - 정원 화단 물주기 및 전지</p>
+                </div>
             </div>
 
             <div class="card">
-                <h2 class="card-title">관리 알림</h2>
-                <div class="status-item"><span>한지 보수</span><span class="alert">D-2</span></div>
-                <div class="status-item"><span>장작 수급</span><span>양호</span></div>
+                <h2 class="card-title">유지보수 알림</h2>
+                <img src="https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?auto=format&fit=crop&w=800&q=80" alt="시설 관리" class="hanok-photo">
+                <div class="status-item"><span>창호지 보수</span><span class="alert">D-2</span></div>
+                <div class="status-item"><span>참나무 장작</span><span>재고 넉넉</span></div>
             </div>
+
         </div>
     </main>
 
     <script>
-        // 1. 실시간 시계 기능
+        // 시계 기능
         function updateClock() {
             const now = new Date();
-            const Y = now.getFullYear();
-            const M = String(now.getMonth() + 1).padStart(2, '0');
-            const D = String(now.getDate()).padStart(2, '0');
-            const h = String(now.getHours()).padStart(2, '0');
-            const m = String(now.getMinutes()).padStart(2, '0');
-            const s = String(now.getSeconds()).padStart(2, '0');
-            
-            document.getElementById('digital-clock').innerText = `${Y}-${M}-${D} ${h}:${m}:${s}`;
+            document.getElementById('digital-clock').innerText = now.toLocaleString();
         }
         setInterval(updateClock, 1000);
         updateClock();
 
-        // 2. 천안 성거읍 실시간 날씨 기능 (Open-Meteo API)
+        // 날씨 기능 (천안 성거읍)
         async function fetchWeather() {
             try {
-                // 천안 성거읍 부근 위도(36.88), 경도(127.21)
-                const response = await fetch('https://api.open-meteo.com/v1/forecast?latitude=36.88&longitude=127.21&current_weather=true');
-                const data = await response.json();
-                const temp = data.current_weather.temperature;
-                const code = data.current_weather.weathercode;
-                
-                let condition = "맑음";
-                if(code > 0) condition = "흐림";
-                if(code > 50) condition = "비/눈";
-
-                document.getElementById('weather').innerText = `성거읍 ${temp}°C / ${condition}`;
-            } catch (e) {
-                document.getElementById('weather').innerText = "날씨 정보 연결 실패";
-            }
+                const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=36.88&longitude=127.21&current_weather=true');
+                const data = await res.json();
+                document.getElementById('weather').innerText = `성거읍 ${data.current_weather.temperature}°C`;
+            } catch (e) { document.getElementById('weather').innerText = "날씨 연결 실패"; }
         }
         fetchWeather();
-        setInterval(fetchWeather, 600000); // 10분마다 업데이트
     </script>
-
 </body>
 </html>
